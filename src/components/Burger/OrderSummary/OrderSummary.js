@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Aux from '../../../hoc/Aux';
 import CustomButton from '../../UI/Button/Button';
 
-const orderSummary = ({ ingredients, cancel, continueP, price }) => {
-    const ingredientSummary = Object.keys(ingredients)
+class OrderSummary extends Component {
+  componentWillUpdate() {
+    console.log('OrderSummary will update')
+  }
+
+  render() {
+      const ingredientSummary = Object.keys(this.props.ingredients)
       .map(key => {
         return (<li key={key}>
                 <span style={{textTransform: 'capitalize'}}>{key}</span>:
-                 {ingredients[key]}</li>)
+                 {this.props.ingredients[key]}</li>)
       })
    return (
     <Aux>
@@ -16,12 +21,13 @@ const orderSummary = ({ ingredients, cancel, continueP, price }) => {
       <ul>
       {ingredientSummary}
       </ul>
-      <p><strong>Total Price: ${price.toFixed(2)}</strong></p>
+      <p><strong>Total Price: ${this.props.price.toFixed(2)}</strong></p>
       <p>Continue to Checkout?</p>
-      <CustomButton btnType="Danger" clicked={cancel}>CANCEL</CustomButton>
-      <CustomButton btnType="Success" clicked={continueP}>CONTINUE</CustomButton>
+      <CustomButton btnType="Danger" clicked={this.props.cancel}>CANCEL</CustomButton>
+      <CustomButton btnType="Success" clicked={this.props.continueP}>CONTINUE</CustomButton>
     </Aux>
     )
+  }
 }
 
-export default orderSummary;
+export default OrderSummary;
